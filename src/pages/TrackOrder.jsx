@@ -22,7 +22,7 @@ export default function TrackOrder() {
   }, [])
 
   useEffect(() => {
-    const id = searchParams.get('orderId')
+    const id = searchParams.get('orderId')?.replace(/^#/, '')
     if (id) lookupOrder(id)
   }, [searchParams])
 
@@ -64,7 +64,8 @@ export default function TrackOrder() {
 
   const handleSearch = (e) => {
     e.preventDefault()
-    if (inputId.trim()) lookupOrder(inputId.trim())
+    const cleaned = inputId.trim().replace(/^#/, '')
+    if (cleaned) lookupOrder(cleaned)
   }
 
   const getStepIndex = (status) => {
