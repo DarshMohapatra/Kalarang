@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useWishlist } from '../context/WishlistContext'
 import { useCart } from '../context/CartContext'
+import { useCurrency } from '../context/CurrencyContext'
 
 export default function Wishlist() {
   const [isMobile, setIsMobile] = useState(false)
   const { wishlistItems, removeFromWishlist, clearWishlist } = useWishlist()
   const { addToCart } = useCart()
+  const { formatPrice } = useCurrency()
   const [movedId, setMovedId] = useState(null)
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function Wishlist() {
                     <h3 style={{ fontFamily: 'Cormorant Garamond, serif', color: '#1C2B1D', fontSize: isMobile ? '14px' : '17px', margin: '0 0 4px', lineHeight: 1.25 }}>{item.title}</h3>
                     {item.artisan && <p style={{ color: '#6B7280', fontSize: '11px', margin: '0 0 6px' }}>{item.artisan}</p>}
                     <p style={{ color: '#C9A84C', fontWeight: 700, fontSize: '15px', margin: '0 0 12px', fontFamily: 'DM Sans, sans-serif' }}>
-                      ₹{item.price.toLocaleString('en-IN')}
+                      {formatPrice(item.price)}
                     </p>
                     <div style={{ display: 'flex', gap: '8px' }}>
                       <button

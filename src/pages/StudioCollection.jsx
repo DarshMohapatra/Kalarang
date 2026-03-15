@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import HoverActions from '../components/product/HoverActions'
+import { useCurrency } from '../context/CurrencyContext'
 
 const studioWorks = [
   { id: '2', title: 'Forest Dreams', artForm: 'Acrylic', price: 12000, medium: 'Acrylic on canvas', dimensions: '40cm x 50cm', style: 'Abstract', image: 'https://placehold.co/600x700/C9A84C/1C2B1D?text=Acrylic', featured: true, statement: 'An exploration of the forests I grew up near — layers of green memory.' },
@@ -34,6 +35,7 @@ const priceToSort = {
 export default function StudioCollection() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMobile, setIsMobile] = useState(false)
+  const { formatPrice } = useCurrency()
 
   const paramStyle = searchParams.get('style')
   const paramSize = searchParams.get('size')
@@ -219,7 +221,7 @@ export default function StudioCollection() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(201,168,76,0.15)', paddingTop: '10px', marginTop: isMobile ? '6px' : '0' }}>
                       <p style={{ color: '#6B7280', fontSize: '11px', margin: 0 }}>{work.dimensions}</p>
                       <p style={{ color: '#C9A84C', fontWeight: 700, fontSize: isMobile ? '14px' : '16px', margin: 0, whiteSpace: 'nowrap', fontFamily: 'DM Sans, sans-serif' }}>
-                        {`₹${work.price.toLocaleString('en-IN')}`}
+                        {formatPrice(work.price)}
                       </p>
                     </div>
                   </div>

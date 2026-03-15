@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useCurrency } from '../context/CurrencyContext'
 
 const workshops = [
   {
@@ -79,6 +80,7 @@ const typeParamMap = { founder: 'Founder Teaches', artisan: 'Artisan Guest', onl
 
 export default function Workshops() {
   const [isMobile, setIsMobile] = useState(false)
+  const { formatPrice } = useCurrency()
   const [searchParams] = useSearchParams()
   const paramType = searchParams.get('type')
   const [activeFilter, setActiveFilter] = useState(typeParamMap[paramType] || 'All')
@@ -182,7 +184,7 @@ export default function Workshops() {
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(201,168,76,0.15)', paddingTop: '14px', gap: '12px', flexWrap: 'wrap' }}>
                   <div>
                     <p style={{ color: '#C9A84C', fontWeight: 700, fontSize: '20px', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
-                      ₹{ws.price.toLocaleString('en-IN')}
+                      {formatPrice(ws.price)}
                       <span style={{ color: '#6B7280', fontSize: '12px', fontWeight: 400 }}> / person</span>
                     </p>
                     {ws.seatsLeft !== null && (

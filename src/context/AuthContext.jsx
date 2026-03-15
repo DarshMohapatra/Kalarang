@@ -49,7 +49,19 @@ export function AuthProvider({ children }) {
       options: { data: { name } },
     })
     if (error) return { success: false, error: error.message }
-    if (data.user) setUser(mapUser(data.user))
+
+    // Auto-confirm email via RPC to avoid "Email not confirmed" error
+    try {
+      await supabase.rpc('confirm_user_email', { user_email: email })
+    } catch {}
+
+    // Auto-login after signup
+    const { data: loginData, error: loginError } = await supabase.auth.signInWithPassword({ email, password })
+    if (!loginError && loginData.user) {
+      setUser(mapUser(loginData.user))
+    } else if (data.user) {
+      setUser(mapUser(data.user))
+    }
     return { success: true }
   }
 

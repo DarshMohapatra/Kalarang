@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import HoverActions from '../components/product/HoverActions'
+import { useCurrency } from '../context/CurrencyContext'
 
 const artisans = [
   { id: '1', name: 'Mamata Mahapatra', nameDevanagari: 'ममता महापात्र', artForm: 'Patachitra', state: 'Odisha', village: 'Raghurajpur', district: 'Puri', bio: 'I learned Patachitra from my mother-in-law when I was 16. In Raghurajpur, every house paints — it is the air we breathe. My brush is made from mouse hair, my colours from stones and conch shells. I paint the gods the way my grandmother saw them — with many arms and kind eyes.', quote: 'When I paint Durga, I feel her strength in my hands.', portrait: 'https://placehold.co/800x500/1C2B1D/C9A84C?text=Patachitra+Painting', image: 'https://placehold.co/120x120/1C2B1D/C9A84C?text=M', socialLink: null },
@@ -51,6 +52,7 @@ function IndiaStateHighlight({ state }) {
 export default function ArtisanProfile() {
   const { id } = useParams()
   const [isMobile, setIsMobile] = useState(false)
+  const { formatPrice } = useCurrency()
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
@@ -184,7 +186,7 @@ export default function ArtisanProfile() {
                     {work.title}
                   </h3>
                   <p style={{ color: '#C9A84C', fontWeight: 700, fontSize: '15px', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
-                    ₹{work.price.toLocaleString('en-IN')}
+                    {formatPrice(work.price)}
                   </p>
                 </div>
               </div>

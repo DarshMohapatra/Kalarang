@@ -1,7 +1,8 @@
- import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import { useCurrency } from '../context/CurrencyContext'
 
 // Placeholder product data — replace with API call later
 const allProducts = [
@@ -32,6 +33,7 @@ export default function ProductPage() {
   const { id } = useParams()
   const { addToCart, cartItems } = useCart()
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
+  const { formatPrice } = useCurrency()
   const [isMobile, setIsMobile] = useState(false)
   const [added, setAdded] = useState(false)
   const [activeTab, setActiveTab] = useState('story')
@@ -126,7 +128,7 @@ export default function ProductPage() {
 
           {/* Price */}
           <p style={{ color: '#C9A84C', fontSize: '28px', fontWeight: 700, margin: '0 0 24px', fontFamily: 'DM Sans, sans-serif' }}>
-            ₹{product.price.toLocaleString('en-IN')}
+            {formatPrice(product.price)}
           </p>
 
           {/* Artisan info — Wing B only */}
@@ -225,7 +227,7 @@ export default function ProductPage() {
             onClick={handleAddToCart}
             style={{ width: '100%', padding: '16px', background: added ? '#2d4a2e' : '#1C2B1D', color: '#C9A84C', border: 'none', fontSize: '12px', letterSpacing: '0.3em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'DM Sans, sans-serif' }}
           >
-            {added ? '✓ Added to Cart' : inCart ? 'Add One More' : `Add to Cart — ₹${product.price.toLocaleString('en-IN')}`}
+            {added ? '✓ Added to Cart' : inCart ? 'Add One More' : `Add to Cart — ${formatPrice(product.price)}`}
           </button>
         </div>
       )}

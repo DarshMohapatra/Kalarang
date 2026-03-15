@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
+import { useCurrency } from '../context/CurrencyContext'
 import { supabase } from '../supabase'
 
 export default function Checkout() {
   const [isMobile, setIsMobile] = useState(false)
   const { cartItems, cartTotal, clearCart } = useCart()
   const { user, isLoggedIn } = useAuth()
+  const { formatPrice } = useCurrency()
   const navigate = useNavigate()
 
   const [step, setStep] = useState(1) // 1: address, 2: payment, 3: confirmation
@@ -229,7 +231,7 @@ export default function Checkout() {
                     Back
                   </button>
                   <button onClick={handlePlaceOrder} disabled={placing} style={{ flex: 2, padding: '16px', background: placing ? '#2d4a2e' : '#1C2B1D', color: '#C9A84C', border: 'none', fontSize: '12px', letterSpacing: '0.3em', textTransform: 'uppercase', cursor: placing ? 'not-allowed' : 'pointer', fontFamily: 'DM Sans, sans-serif', fontWeight: 600, opacity: placing ? 0.7 : 1 }}>
-                    {placing ? 'Placing Order...' : `Place Order — ₹${grandTotal.toLocaleString('en-IN')}`}
+                    {placing ? 'Placing Order...' : `Place Order — ${formatPrice(grandTotal)}`}
                   </button>
                 </div>
               </>
@@ -247,16 +249,16 @@ export default function Checkout() {
                     <p style={{ color: '#1C2B1D', fontSize: '12px', margin: '0 0 2px', fontWeight: 500 }}>{item.title}</p>
                     <p style={{ color: '#6B7280', fontSize: '11px', margin: 0 }}>Qty: {item.quantity}</p>
                   </div>
-                  <p style={{ color: '#C9A84C', fontSize: '13px', fontWeight: 600, margin: 0, fontFamily: 'DM Sans, sans-serif' }}>₹{(item.price * item.quantity).toLocaleString('en-IN')}</p>
+                  <p style={{ color: '#C9A84C', fontSize: '13px', fontWeight: 600, margin: 0, fontFamily: 'DM Sans, sans-serif' }}>{formatPrice(item.price * item.quantity)}</p>
                 </div>
               ))}
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px' }}>
                 <span style={{ color: '#6B7280', fontSize: '12px' }}>Shipping</span>
-                <span style={{ color: '#1C2B1D', fontSize: '12px' }}>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
+                <span style={{ color: '#1C2B1D', fontSize: '12px' }}>{shipping === 0 ? 'Free' : formatPrice(shipping)}</span>
               </div>
               <div style={{ borderTop: '1px solid rgba(201,168,76,0.2)', marginTop: '12px', paddingTop: '12px', display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#1C2B1D', fontWeight: 600 }}>Total</span>
-                <span style={{ color: '#C9A84C', fontWeight: 700, fontFamily: 'DM Sans, sans-serif' }}>₹{grandTotal.toLocaleString('en-IN')}</span>
+                <span style={{ color: '#C9A84C', fontWeight: 700, fontFamily: 'DM Sans, sans-serif' }}>{formatPrice(grandTotal)}</span>
               </div>
             </div>
           </div>

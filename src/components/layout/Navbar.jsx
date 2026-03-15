@@ -3,6 +3,7 @@ import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
 import { useWishlist } from '../../context/WishlistContext'
+import { useCurrency } from '../../context/CurrencyContext'
 
 const categories = [
   {
@@ -142,10 +143,10 @@ export default function Navbar() {
   const { cartCount } = useCart()
   const { user, isLoggedIn, logout } = useAuth()
   const { wishlistCount } = useWishlist()
+  const { currency, setCurrency } = useCurrency()
   const [search, setSearch] = useState('')
   const [hoveredCat, setHoveredCat] = useState(null)
   const [showAccount, setShowAccount] = useState(false)
-  const [currency, setCurrency] = useState('INR')
   const navigate = useNavigate()
 
   const handleSearch = (e) => {

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useRef, useState, useEffect } from 'react'
+import { useCurrency } from '../context/CurrencyContext'
 
 const featuredWorks = [
   { id: 1, title: 'Goddess Durga — Patachitra', artisan: 'Mamata Mahapatra', artForm: 'Patachitra', price: 4500, wing: 'B', image: 'https://placehold.co/600x700/1C2B1D/C9A84C?text=Patachitra' },
@@ -27,6 +28,7 @@ const customerFavourites = [
 export default function Home() {
   const carouselRef = useRef(null)
   const [isMobile, setIsMobile] = useState(false)
+  const { formatPrice } = useCurrency()
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
@@ -131,7 +133,7 @@ export default function Home() {
                 <h3 style={{ fontFamily: 'Cormorant Garamond, serif', color: '#1C2B1D', fontSize: '18px', margin: '4px 0' }}>{work.title}</h3>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <p style={{ color: '#6B7280', fontSize: '13px', margin: 0 }}>{work.artisan}</p>
-                  <p style={{ color: '#C9A84C', fontWeight: 600, margin: 0 }}>₹{work.price.toLocaleString('en-IN')}</p>
+                  <p style={{ color: '#C9A84C', fontWeight: 600, margin: 0 }}>{formatPrice(work.price)}</p>
                 </div>
               </div>
             </Link>
@@ -169,7 +171,7 @@ export default function Home() {
                 <div style={{ marginTop: '10px' }}>
                   <p style={{ color: 'rgba(245,239,224,0.5)', fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', margin: 0 }}>{item.artForm}</p>
                   <h3 style={{ fontFamily: 'Cormorant Garamond, serif', color: '#F5EFE0', fontSize: '17px', margin: '4px 0' }}>{item.title}</h3>
-                  <p style={{ color: '#C9A84C', fontWeight: 600, margin: 0, fontSize: '14px' }}>₹{item.price.toLocaleString('en-IN')}</p>
+                  <p style={{ color: '#C9A84C', fontWeight: 600, margin: 0, fontSize: '14px' }}>{formatPrice(item.price)}</p>
                 </div>
               </Link>
             ))}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import HoverActions from '../components/product/HoverActions'
+import { useCurrency } from '../context/CurrencyContext'
 
 const collections = [
   {
@@ -72,6 +73,7 @@ const collections = [
 
 export default function Collections() {
   const [isMobile, setIsMobile] = useState(false)
+  const { formatPrice } = useCurrency()
   const [searchParams, setSearchParams] = useSearchParams()
 
   const activeId = searchParams.get('set') || collections[0].id
@@ -173,7 +175,7 @@ export default function Collections() {
                   </h3>
                   <p style={{ color: '#6B7280', fontSize: '11px', margin: '0 0 8px' }}>{product.artisan}</p>
                   <p style={{ color: '#C9A84C', fontWeight: 700, fontSize: '15px', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
-                    ₹{product.price.toLocaleString('en-IN')}
+                    {formatPrice(product.price)}
                   </p>
                 </div>
               </div>

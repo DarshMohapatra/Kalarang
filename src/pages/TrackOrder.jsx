@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { useCurrency } from '../context/CurrencyContext'
 import { supabase } from '../supabase'
 
 const statusSteps = ['Confirmed', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered']
 
 export default function TrackOrder() {
   const [isMobile, setIsMobile] = useState(false)
+  const { formatPrice } = useCurrency()
   const [searchParams] = useSearchParams()
   const [inputId, setInputId] = useState(searchParams.get('orderId') || '')
   const [order, setOrder] = useState(null)
@@ -141,7 +143,7 @@ export default function TrackOrder() {
                 </div>
                 <div>
                   <p style={{ color: '#6B7280', fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '4px', fontFamily: 'DM Sans, sans-serif' }}>Total</p>
-                  <p style={{ color: '#C9A84C', fontSize: '18px', fontWeight: 700, margin: 0, fontFamily: 'DM Sans, sans-serif' }}>₹{order.total.toLocaleString('en-IN')}</p>
+                  <p style={{ color: '#C9A84C', fontSize: '18px', fontWeight: 700, margin: 0, fontFamily: 'DM Sans, sans-serif' }}>{formatPrice(order.total)}</p>
                 </div>
               </div>
 
@@ -189,7 +191,7 @@ export default function TrackOrder() {
                     <p style={{ color: '#6B7280', fontSize: '12px', margin: 0 }}>Qty: {item.quantity}</p>
                   </div>
                   <p style={{ color: '#C9A84C', fontSize: '14px', fontWeight: 600, margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
-                    ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+                    {formatPrice(item.price * item.quantity)}
                   </p>
                 </div>
               ))}

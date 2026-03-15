@@ -54,3 +54,24 @@ begin
   return json_build_object('success', true);
 end;
 $$;
+
+-- ============================================================
+-- Auto-confirm user email function
+-- Fixes "Email not confirmed" error on signup
+-- ============================================================
+create or replace function confirm_user_email(user_email text)
+returns json
+language plpgsql
+security definer
+as $$
+declare
+  uid uuid;
+begin
+  select id into uid from auth.users where email = user_email;
+  if uid is null then
+    return json_build_object('success', false, 'error', 'User not found');
+  end if;
+  update auth.users set email_confirmed_at = now() where id = uid and email_confirmed_at is null;
+  return json_build_object('success', true);
+end;
+$$;

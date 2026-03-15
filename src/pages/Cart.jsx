@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
+import { useCurrency } from '../context/CurrencyContext'
 
 export default function Cart() {
   const [isMobile, setIsMobile] = useState(false)
   const { cartItems, cartTotal, updateQuantity, removeFromCart, clearCart } = useCart()
   const { isLoggedIn } = useAuth()
+  const { formatPrice } = useCurrency()
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768)
@@ -60,7 +62,7 @@ export default function Cart() {
                   </Link>
                   {item.artisan && <p style={{ color: '#6B7280', fontSize: '12px', margin: '0 0 8px' }}>{item.artisan}</p>}
                   <p style={{ color: '#C9A84C', fontWeight: 700, fontSize: '16px', margin: '0 0 12px', fontFamily: 'DM Sans, sans-serif' }}>
-                    ₹{item.price.toLocaleString('en-IN')}
+                    {formatPrice(item.price)}
                   </p>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: 'auto' }}>
@@ -84,20 +86,20 @@ export default function Cart() {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                 <span style={{ color: '#6B7280', fontSize: '13px' }}>Subtotal</span>
-                <span style={{ color: '#1C2B1D', fontSize: '13px', fontWeight: 600 }}>₹{cartTotal.toLocaleString('en-IN')}</span>
+                <span style={{ color: '#1C2B1D', fontSize: '13px', fontWeight: 600 }}>{formatPrice(cartTotal)}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                 <span style={{ color: '#6B7280', fontSize: '13px' }}>Shipping</span>
                 <span style={{ color: shipping === 0 ? '#2d4a2e' : '#1C2B1D', fontSize: '13px', fontWeight: 600 }}>
-                  {shipping === 0 ? 'Free' : `₹${shipping}`}
+                  {shipping === 0 ? 'Free' : formatPrice(shipping)}
                 </span>
               </div>
               {shipping > 0 && (
-                <p style={{ color: '#C9A84C', fontSize: '11px', margin: '0 0 12px', fontStyle: 'italic' }}>Free shipping on orders above ₹5,000</p>
+                <p style={{ color: '#C9A84C', fontSize: '11px', margin: '0 0 12px', fontStyle: 'italic' }}>Free shipping on orders above {formatPrice(5000)}</p>
               )}
               <div style={{ borderTop: '1px solid rgba(201,168,76,0.2)', paddingTop: '12px', display: 'flex', justifyContent: 'space-between', marginBottom: '24px' }}>
                 <span style={{ color: '#1C2B1D', fontSize: '16px', fontWeight: 600 }}>Total</span>
-                <span style={{ color: '#C9A84C', fontSize: '20px', fontWeight: 700, fontFamily: 'DM Sans, sans-serif' }}>₹{grandTotal.toLocaleString('en-IN')}</span>
+                <span style={{ color: '#C9A84C', fontSize: '20px', fontWeight: 700, fontFamily: 'DM Sans, sans-serif' }}>{formatPrice(grandTotal)}</span>
               </div>
 
               <Link to={isLoggedIn ? '/checkout' : '/login?redirect=/checkout'} style={{

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useCurrency } from '../context/CurrencyContext'
 import { supabase } from '../supabase'
 
 export default function Orders() {
   const [isMobile, setIsMobile] = useState(false)
   const { user, isLoggedIn } = useAuth()
+  const { formatPrice } = useCurrency()
   const navigate = useNavigate()
   const [orders, setOrders] = useState([])
   const [expandedOrder, setExpandedOrder] = useState(null)
@@ -131,7 +133,7 @@ export default function Orders() {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <span style={{ color: '#C9A84C', fontWeight: 700, fontSize: '16px', fontFamily: 'DM Sans, sans-serif' }}>
-                      ₹{order.total.toLocaleString('en-IN')}
+                      {formatPrice(order.total)}
                     </span>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style={{ transform: expandedOrder === order.id ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>
                       <path d="M6 9l6 6 6-6" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -147,10 +149,10 @@ export default function Orders() {
                         <div style={{ flex: 1 }}>
                           <p style={{ color: '#1C2B1D', fontSize: '13px', fontWeight: 500, margin: '0 0 2px' }}>{item.title}</p>
                           {item.artisan && <p style={{ color: '#6B7280', fontSize: '11px', margin: '0 0 4px' }}>{item.artisan}</p>}
-                          <p style={{ color: '#6B7280', fontSize: '12px', margin: 0 }}>Qty: {item.quantity} × ₹{item.price.toLocaleString('en-IN')}</p>
+                          <p style={{ color: '#6B7280', fontSize: '12px', margin: 0 }}>Qty: {item.quantity} × {formatPrice(item.price)}</p>
                         </div>
                         <p style={{ color: '#C9A84C', fontSize: '14px', fontWeight: 600, margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
-                          ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+                          {formatPrice(item.price * item.quantity)}
                         </p>
                       </div>
                     ))}
@@ -158,11 +160,11 @@ export default function Orders() {
                     <div style={{ borderTop: '1px solid rgba(201,168,76,0.12)', paddingTop: '12px', marginTop: '4px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
                         <span style={{ color: '#6B7280', fontSize: '12px' }}>Shipping</span>
-                        <span style={{ color: '#1C2B1D', fontSize: '12px' }}>{order.shipping === 0 ? 'Free' : `₹${order.shipping}`}</span>
+                        <span style={{ color: '#1C2B1D', fontSize: '12px' }}>{order.shipping === 0 ? 'Free' : formatPrice(order.shipping)}</span>
                       </div>
                       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span style={{ color: '#1C2B1D', fontSize: '14px', fontWeight: 600 }}>Total</span>
-                        <span style={{ color: '#C9A84C', fontSize: '16px', fontWeight: 700, fontFamily: 'DM Sans, sans-serif' }}>₹{order.total.toLocaleString('en-IN')}</span>
+                        <span style={{ color: '#C9A84C', fontSize: '16px', fontWeight: 700, fontFamily: 'DM Sans, sans-serif' }}>{formatPrice(order.total)}</span>
                       </div>
                     </div>
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import ArtisanCard from '../components/artisan/ArtisanCard'
 import HoverActions from '../components/product/HoverActions'
+import { useCurrency } from '../context/CurrencyContext'
 
 const artisans = [
   { id: '1', name: 'Mamata Mahapatra', nameDevanagari: 'ममता महापात्र', artForm: 'Patachitra', state: 'Odisha', village: 'Raghurajpur', image: 'https://placehold.co/120x120/1C2B1D/C9A84C?text=M' },
@@ -41,6 +42,7 @@ const priceRanges = {
 export default function ArtisanGallery() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [isMobile, setIsMobile] = useState(false)
+  const { formatPrice } = useCurrency()
   const paramTab = searchParams.get('tab')
   const [tab, setTab] = useState(paramTab === 'artisans' ? 'artisans' : 'works')
 
@@ -221,7 +223,7 @@ export default function ArtisanGallery() {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(201,168,76,0.15)', paddingTop: '8px', marginTop: '6px' }}>
                             <p style={{ color: '#6B7280', fontSize: '11px', margin: 0 }}>{work.dimensions}</p>
                             <p style={{ color: '#C9A84C', fontWeight: 700, fontSize: isMobile ? '14px' : '16px', margin: 0, whiteSpace: 'nowrap', fontFamily: 'DM Sans, sans-serif' }}>
-                              ₹{work.price.toLocaleString('en-IN')}
+                              {formatPrice(work.price)}
                             </p>
                           </div>
                         </div>
