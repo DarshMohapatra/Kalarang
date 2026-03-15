@@ -122,7 +122,7 @@ export default function ArtisanGallery() {
   })
 
   return (
-    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '0' : '104px', background: '#1C2B1D', minHeight: '100vh' }}>
+    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '100px' : '104px', background: '#1C2B1D', minHeight: '100vh' }}>
 
       {/* Hero */}
       <section style={{ background: 'linear-gradient(135deg, #F5EFE0 60%, #ede5cc)', padding: isMobile ? '48px 20px' : '56px 80px', textAlign: 'center' }}>

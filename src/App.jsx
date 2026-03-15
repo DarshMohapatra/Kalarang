@@ -59,7 +59,6 @@ export default function App() {
           </Routes>
         </main>
         <Footer />
-        <div style={{ height: '64px' }} className="md:hidden" />
         <MobileNav />
       </div>
     </BrowserRouter>

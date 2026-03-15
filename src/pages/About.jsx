@@ -19,7 +19,7 @@ export default function About() {
   }, [])
 
   return (
-    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '0' : '104px', background: '#F5EFE0', minHeight: '100vh' }}>
+    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '100px' : '104px', background: '#F5EFE0', minHeight: '100vh' }}>
 
       {/* Hero */}
       <section style={{ background: 'linear-gradient(135deg, #1C2B1D 60%, #2d4a2e)', padding: isMobile ? '56px 20px' : '80px 80px', textAlign: 'center' }}>

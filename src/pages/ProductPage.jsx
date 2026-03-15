@@ -63,7 +63,7 @@ export default function ProductPage() {
   }
 
   return (
-    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '0' : '104px' }}>
+    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '100px' : '104px' }}>
 
       {/* Breadcrumb */}
       <div style={{ padding: isMobile ? '16px 20px' : '16px 64px', borderBottom: '1px solid rgba(201,168,76,0.1)' }}>

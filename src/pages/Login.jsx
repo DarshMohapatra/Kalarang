@@ -94,7 +94,7 @@ export default function Login() {
   }
 
   return (
-    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '0' : '104px', background: '#F5EFE0', minHeight: '100vh' }}>
+    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '100px' : '104px', background: '#F5EFE0', minHeight: '100vh' }}>
       <div style={{ maxWidth: '440px', margin: '0 auto', padding: isMobile ? '48px 20px' : '64px 20px' }}>
 
         {/* Header */}

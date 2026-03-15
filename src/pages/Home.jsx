@@ -44,7 +44,7 @@ export default function Home() {
   const px = isMobile ? '20px' : '64px'
 
   return (
-    <div style={{ overflowX: 'hidden' }}>
+    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '100px' : '0' }}>
 
       {/* 1. HERO SPLIT */}
       <section style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', height: '100vh' }}>

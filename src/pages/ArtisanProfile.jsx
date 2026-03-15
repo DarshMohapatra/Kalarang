@@ -73,7 +73,7 @@ export default function ArtisanProfile() {
   const works = artisanWorks.filter(w => w.artisanId === artisan.id)
 
   return (
-    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '0' : '104px', background: '#F5EFE0', minHeight: '100vh' }}>
+    <div style={{ overflowX: 'hidden', paddingTop: isMobile ? '100px' : '104px', background: '#F5EFE0', minHeight: '100vh' }}>
 
       {/* Hero — full-width portrait */}
       <section style={{ position: 'relative', background: '#1C2B1D' }}>
