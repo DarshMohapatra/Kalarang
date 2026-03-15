@@ -18,6 +18,7 @@ import About from './pages/About'
 import InfoPage from './pages/InfoPage'
 import Orders from './pages/Orders'
 import TrackOrder from './pages/TrackOrder'
+import Search from './pages/Search'
 
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/workshops" element={<Workshops />} />
             <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/search" element={<Search />} />
             <Route path="/gifting" element={<CorporateGifting />} />
             <Route path="/login" element={<Login />} />
             <Route path="/wishlist" element={<Wishlist />} />
